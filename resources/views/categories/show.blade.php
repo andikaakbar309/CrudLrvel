@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('layouts.app')
 
 @section('content')
 
@@ -11,6 +11,6 @@
         <h4>Sequence: {{ $data->seq }}</h4>
         <h4>Created: {{ $data->created_at }}</h4>
         <h4>Updated: {{ $data->updated_at }}</h4>
-        <h4>Status: <p class="badge {{ $data->status == 'active' ? 'bg-primary' : 'bg-danger' }}">{{ $data->status }}</p></h4>
+        <h4>Status: <p class="badge {{ $data->status == 'Active' ? 'bg-primary' : 'bg-danger' }}">{{ $data->status }}</p></h4>
     </div>
 @endsection

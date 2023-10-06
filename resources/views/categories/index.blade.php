@@ -1,11 +1,7 @@
-@extends('layout/app')
+@extends('layouts/app')
 
 @section('content')
 
-<form action="/logout" method="POST">
-    @csrf
-    <button class="btn btn-danger btn-sm mb-3">Logout</button>
-</form>
 <a href="/categories/create" class="btn btn-primary btn-sm">Tambah Data</a>
 
     <table class="table table-bordered mt-3">

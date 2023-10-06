@@ -15,7 +15,7 @@ use App\Http\Controllers\MasterDataController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('/auth/login');
 });
 
 // Route::resource('/categories', MasterDataController::class);
@@ -23,6 +23,10 @@ Route::get('/', function () {
 Route::middleware(['auth'])->group(function () {
     Route::resource('categories', MasterDataController::class);
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes();
 

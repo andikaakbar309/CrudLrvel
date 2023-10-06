@@ -130,8 +130,7 @@ class MasterDataController extends Controller
             $data->status = 'Inactive';
             $data->is_deleted = true;
             $data->save();
-            return redirect('/categories')->with('success', 'Berhasil');
+            return redirect('/categories')->with('success', 'Data is inactive');
         }
-        return redirect('/categories')->with('success', 'Data is inactive');
     }
 }
