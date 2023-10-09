@@ -24,14 +24,11 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('categories', MasterDataController::class);
 });
 
-Auth::routes();
+Route::post('categories/export-pdf', [MasterDataController::class, 'exportPDF'])->name('export-pdf');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::post('categories/export-excel', [MasterDataController::class, 'exportExcel'])->name('export-excel');
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+

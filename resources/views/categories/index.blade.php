@@ -3,8 +3,17 @@
 @section('content')
 
 <a href="/categories/create" class="btn btn-primary btn-sm">Tambah Data</a>
+<form action="{{ route('export-pdf') }}" method="post" class=" float-end" target="__blank">
+@csrf
+<button class="btn btn-danger btn-sm mx-1">Export PDF</button>
+</form>
+<form action="{{ route('export-excel') }}" method="post" class="float-end" target="__blank">
+@csrf
+<button class="btn btn-success btn-sm mx-1">Export Excel</button>
+</form>
 
-    <table class="table table-bordered mt-3">
+
+    <table class="table table-bordered mt-3" id="datatablesSimple">
         <thead>
             <tr>
                 <th>Id</th>
@@ -25,7 +34,7 @@
                 <td>{{ $item->seq }}</td>
                 <td>{{ $item->created_at }}</td>
                 <td>{{ $item->updated_at }}</td>
-                <td> <span class="badge rounded-pill {{ $item->status == 'Active' ? 'bg-primary' : 'bg-danger' }}">{{ $item->status }}</span> </td>
+                <td> <span class="badge rounded-pill m-2 {{ $item->status == 'Active' ? 'bg-primary' : 'bg-danger' }}">{{ $item->status }}</span> </td>
                 <td>
                 <a href="{{ url('/categories/'. $item->id.'/edit') }}" class="btn btn-success btn-sm">Edit</a>
                 <form onsubmit="return confirm('Sure Inactive Data?')" class="d-inline" action="{{ route('categories.destroy', $item->id) }}" method="POST">

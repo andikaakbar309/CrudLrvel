@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\MasterCategory;
 use Illuminate\Support\Facades\Session;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\CategoryExport;
+use PDF;
 
 class MasterDataController extends Controller
 {
@@ -16,8 +19,21 @@ class MasterDataController extends Controller
     public function index()
     {
         // $cate = MasterCategory::orderBy('status', 'asc', "CASE WHEN status = 'active' THEN 0 ELSE 1 END")->paginate(5);
-        $cate = MasterCategory::orderBy('seq', 'asc')->paginate(5);
-        return view('categories/index')->with('data', $cate);
+        $data = MasterCategory::orderBy('status', 'asc')->paginate(7);
+        return view('categories/index')->with('data', $data);
+    }
+
+    public function exportExcel()
+    {
+        return Excel::download(new CategoryExport, 'category.xlsx');
+    }
+
+    public function exportPDF()
+    {
+        $data = MasterCategory::all();
+
+        $pdf = PDF::loadView('pdf.pdf', array('data' => $data))->setPaper('a4', 'potrait');
+        return $pdf->download();
     }
 
     /**
@@ -49,12 +65,12 @@ class MasterDataController extends Controller
             'description'=>'nullable',
             'seq'=>'required',
         ]);
-        $cate = [
+        $data = [
             'name'=>$request->input('name'),
             'description'=>$request->input('description'),
             'seq'=>$request->input('seq'),
         ];
-        MasterCategory::create($cate);
+        MasterCategory::create($data);
         return redirect('categories');
     }
 
@@ -66,8 +82,8 @@ class MasterDataController extends Controller
      */
     public function show($id)
     {
-        $cate = MasterCategory::where('id', $id)->first();
-        return view('/categories/show')->with('data', $cate);
+        $data = MasterCategory::where('id', $id)->first();
+        return view('/categories/show')->with('data', $data);
     }
 
     /**
@@ -78,8 +94,8 @@ class MasterDataController extends Controller
      */
     public function edit($id)
     {
-        $cate = MasterCategory::where('id', $id)->first();
-        return view('/categories/edit')->with('data', $cate);
+        $data = MasterCategory::where('id', $id)->first();
+        return view('/categories/edit')->with('data', $data);
     }
 
     /**
@@ -107,12 +123,12 @@ class MasterDataController extends Controller
 
             $data->save();
 
-        $cate = [
+        $data = [
             'name'=>$request->input('name'),
             'description'=>$request->input('description'),
             'seq'=>$request->input('seq')
         ];
-        MasterCategory::where('id', $id)->update($cate);
+        MasterCategory::where('id', $id)->update($data);
         return redirect('/categories')->with('success', 'Succes edit data');
     }
 
